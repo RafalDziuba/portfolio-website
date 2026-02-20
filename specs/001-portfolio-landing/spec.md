@@ -5,6 +5,13 @@
 **Status**: Draft  
 **Input**: User description: "Dwujęzyczna strona portfolio, która ma zachęcać do podjęcia ze mną współpracy. Oprócz kluczowych dla CV sekcji, powinna zawierać również informacje o moich top-5 z testu gallupa oraz krótki opis mojej osobowości. umiejętności miękkich oraz teog, na czym skupiam się w pracy. Strona powinna zawierać sekcje widoczne na załączonym obrazku, tzn. nawigacja, header/hero section, umiejętności i technologie, doświadczenie zawodowe, wybrane projekty, najnowsze artykuły, testimonials z linkedina, (top5 gallup strenghts, opis mojej osobowości) - to wszystko w jakoś specjalnie wydzielonej sekcji z tytułem np. 'Coś więcej o mnie' - nie wiem jak dokładnie można nazwać taką sekcję, footer zawierający prosty formularz kontaktowy, ikony z linkami do githuba i linkedina, uproszczoną nawigację, a na samym dole 'Imię Nazwisko 2026 All rights reserved'"
 
+## Clarifications
+
+### Session 2026-02-20
+
+- Q: How should contact form submissions be handled regarding backend/spam protection? → A: Serverless Email API (e.g., Resend) via Astro API Route + invisible Honeypot.
+- Q: How should multi-language support (i18n) be implemented structurally? → A: Path-based routing (`/pl/`, `/en/`) using Astro View Transitions for instant switching.
+
 ## User Scenarios & Testing _(mandatory)_
 
 ### User Story 1 - Evaluate Professional Experience (Priority: P1)
@@ -66,13 +73,14 @@ An international client visits the website. The site detects their browser langu
 ### Functional Requirements
 
 - **FR-001**: System MUST display the following sections in order (or logically structured): Navigation, Header/Hero, Skills & Technologies, Experience, Projects, Recent Articles, Testimonials, "Coś więcej o mnie" (More about me), and Footer.
-- **FR-002**: System MUST include a working simple contact form within the Footer section.
+- **FR-002**: System MUST include a working simple contact form within the Footer section, processing submissions via a Serverless API Route and employing an invisible honeypot for spam protection.
 - **FR-003**: System MUST provide social links (GitHub, LinkedIn) and simplified navigation in the Footer.
 - **FR-004**: System MUST display a copyright notice ("Imię Nazwisko 2026 All rights reserved") at the very bottom of the page in the Footer.
 - **FR-005**: System MUST showcase the Top 5 Gallup strengths, a personality description, soft skills, and work focus in the "Coś więcej o mnie" section.
 - **FR-006**: System MUST fetch and display Recent Articles via the Sanity CMS integration (as mandated by the constitution).
 - **FR-007**: System MUST be fully responsive and designed mobile-first.
-- **FR-008**: System MUST support Polish and English content natively.
+- **FR-008**: System MUST support Polish and English content natively via path-based routing (`/pl/`, `/en/`) and use Astro View Transitions for instant switching without full page reloads.
+- **FR-009**: System MUST support dual-theme functionality (Light/Dark mode) respecting system preferences by default, with a manual toggle in the UI.
 
 ### Key Entities
 
