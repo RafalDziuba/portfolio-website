@@ -59,12 +59,12 @@ An international client visits the website. The site detects their browser langu
 
 ### Edge Cases
 
-- **Sanity CMS Unavailability**: If the CMS fails to return the recent articles, the section MUST display a graceful error or fallback message rather than breaking the page.
+- **Local Content Missing**: If an expected recent article `.mdx` file is missing or invalid, the build MUST fail cleanly via Zod schema validation.
 - **Contact Form Failure**: If the form submission fails (e.g., due to network error or backend issue), the user MUST be informed with a clear error message and prompted to try again or use direct email.
 
 ### Dependencies & Assumptions
 
-- **Sanity CMS**: Assumed to be configured and returning data correctly.
+- **Local Content Infrastructure**: Assumed that Astro Content Collections and MDX are correctly configured.
 - **Testimonials**: Assumed to be sourced manually from LinkedIn or via a static data file, not requiring complex real-time API integrations.
 - **Browser Language**: Relies on standard HTTP headers or browser APIs (`navigator.language`) to determine the default setting.
 
@@ -77,7 +77,7 @@ An international client visits the website. The site detects their browser langu
 - **FR-003**: System MUST provide social links (GitHub, LinkedIn) and simplified navigation in the Footer.
 - **FR-004**: System MUST display a copyright notice ("Imię Nazwisko 2026 All rights reserved") at the very bottom of the page in the Footer.
 - **FR-005**: System MUST showcase the Top 5 Gallup strengths, a personality description, soft skills, and work focus in the "Coś więcej o mnie" section.
-- **FR-006**: System MUST fetch and display Recent Articles via the Sanity CMS integration (as mandated by the constitution).
+- **FR-006**: System MUST display Recent Articles by querying them locally via Astro Content Collections (as mandated by constitution v1.3.0).
 - **FR-007**: System MUST be fully responsive and designed mobile-first.
 - **FR-008**: System MUST support Polish and English content natively via path-based routing (`/pl/`, `/en/`) and use Astro View Transitions for instant switching without full page reloads.
 - **FR-009**: System MUST support dual-theme functionality (Light/Dark mode) respecting system preferences by default, with a manual toggle in the UI.
@@ -86,7 +86,7 @@ An international client visits the website. The site detects their browser langu
 
 - **Project**: Title, description, image asset, external link.
 - **Experience Item**: Role, company/client, start/end dates, key responsibilities/achievements.
-- **Article**: Title, excerpt, publish date, estimated read time, Sanity CMS reference.
+- **Article**: Title, excerpt, publish date, estimated read time, local MDX file reference.
 - **Testimonial**: Author name, author role, content, LinkedIn profile link.
 - **Gallup Strength**: Name, short description.
 - **Skill**: Name, category (e.g., Frontend, Backend, Tools), appropriate icon.

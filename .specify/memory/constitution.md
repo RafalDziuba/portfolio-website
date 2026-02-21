@@ -4,9 +4,8 @@
 
 <!--
 SYNC IMPACT REPORT:
-- Version change: 1.1.0 → 1.2.0
-- Added principles: Mobile-First RWD
-- Modified principles: Focused Content Areas (added Sanity CMS & Strict SEO for blog)
+- Version change: 1.2.0 → 1.3.0
+- Modified principles: Focused Content Areas (replaced Sanity CMS with Local MDX Content Collections)
 - Required updates:
   - checklist-template.md ✅ verified
   - plan-template.md ✅ verified
@@ -37,7 +36,7 @@ The application MUST support both Light and Dark modes. The theme implementation
 The website is strictly divided into two primary sections:
 
 1. **Professional Profile**: Information relevant to recruiters and proxy clients (experience, skills, projects, CV).
-2. **Blog**: Educational or professional articles accessible primarily via the `/blog` route. Blog content MUST be managed via **Sanity CMS**. Additionally, blog posts MUST adhere to strict SEO principles—all metadata tags, sitemaps, and structured data must be flawlessly implemented to ensure maximum discoverability.
+2. **Blog**: Educational or professional articles accessible primarily via the `/blog` route. Blog content MUST be managed via **Local MDX files and Astro Content Collections**. No external headless CMS (like Sanity) should be used. Additionally, blog posts MUST adhere to strict SEO principles—all metadata tags, sitemaps, and structured data must be flawlessly implemented via MDX frontmatter to ensure maximum discoverability.
    These sections should be distinct but share the unified design system.
 
 ### VI. Zero-Test Policy
@@ -58,11 +57,11 @@ The project MUST be developed using a Responsive Web Design (RWD) and mobile-fir
 
 - All styling must be derived from Tailwind CSS utility classes and its configuration (`tailwind.config.mjs`) using a mobile-first approach.
 - New components must be checked against Lighthouse performance budgets before being considered complete.
-- Content for the blog MUST be sourced from Sanity CMS. Portfolio content can be authored either in Sanity CMS or via Markdown/MDX using Astro's content collections.
+- Content for both the blog and portfolio sections MUST be authored strictly using **Markdown/MDX and Astro's Content Collections** stored locally in the repository.
 
 ## Governance
 
 All architectural decisions, component designs, and feature implementations MUST comply with the principles outlined in this constitution.
 Amendments to this document require a version bump and documented rationale.
 
-**Version**: 1.2.0 | **Ratified**: 2026-02-20 | **Last Amended**: 2026-02-20
+**Version**: 1.3.0 | **Ratified**: 2026-02-20 | **Last Amended**: 2026-02-21
