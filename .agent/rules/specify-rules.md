@@ -5,6 +5,7 @@ Auto-generated from all feature plans. Last updated: 2026-02-21
 ## Active Technologies
 - TypeScript, HTML, CSS, MDX (Astro latest) + Astro, Astro Content Collections, Tailwind CSS (002-local-mdx-blog)
 - Local `.mdx` files via Astro Content Collections (002-local-mdx-blog)
+- TypeScript / HTML (Astro) + Astro, Tailwind CSS (003-portfolio-ui)
 
 - TypeScript, HTML, CSS (Astro latest) + Astro, Tailwind CSS, Sanity CMS Client, Resend (for emails) (001-portfolio-landing)
 
@@ -25,6 +26,7 @@ npm test; npm run lint
 TypeScript, HTML, CSS (Astro latest): Follow standard conventions
 
 ## Recent Changes
+- 003-portfolio-ui: Added TypeScript / HTML (Astro) + Astro, Tailwind CSS
 - 002-local-mdx-blog: Added TypeScript, HTML, CSS, MDX (Astro latest) + Astro, Astro Content Collections, Tailwind CSS
 
 - 001-portfolio-landing: Added TypeScript, HTML, CSS (Astro latest) + Astro, Tailwind CSS, Sanity CMS Client, Resend (for emails)
