@@ -76,14 +76,15 @@ Users can reach out to the developer by scrolling to the footer and finding a se
 - **FR-007**: System MUST provide a Contact Form in the footer with privacy/security assurance copy, processed via a native Astro API route and external email service (e.g., Resend/SendGrid).
 - **FR-008**: System MUST display technologies using uniform capsule-style badges (12px font, 4px vertical / 12px horizontal padding).
 - **FR-009**: System MUST position elements based on a grid on desktop for the Expertise section (4x3 spanning logic) and 2-column layout for Projects.
-- **FR-010**: System MUST provide the user's CV both as viewable HTML sections and as a standalone downloadable PDF document.
-- **FR-011**: System MUST handle form validation via native HTML5 browser popups and indicate loading/error states using CSS-only button state changes.
+- **FR-010**: System MUST handle form validation via native HTML5 browser popups and indicate loading/error states using CSS-only button state changes.
+- **FR-011**: System MUST support rendering code blocks (with syntax highlighting) and images within MDX blog post content.
+- **FR-012**: System MUST render MDX content structurally divided by headers (h2, h3) with enforced upper margins (e.g., `mt-12`) to visually separate sections.
 
 ### Key Entities
 
 - **Project**: Represents a portfolio entry with Image, Title, GitHub Link, Description, and Technology Badges.
 - **Experience**: Represents a career entry with Company Logo, Company Name, Current status badge, Position, Date Range, Description list, and Technology Badges.
-- **Article**: Represents a blog post link with Title, Date, Read Time, and Blog Link.
+- **BlogPost**: Represents a blog post defined via MDX frontmatter with `title`, `description`, `pubDate`, `heroImage`, `tags`, and `language`.
 
 ## Success Criteria _(mandatory)_
 

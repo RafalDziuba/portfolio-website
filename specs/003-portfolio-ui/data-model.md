@@ -30,14 +30,17 @@ Represents a career timeline entry.
 - **description** (string[]): Bullet points of achievements/responsibilities.
 - **technologies** (string[]): List of technology names used.
 
-### `Article`
+### `BlogPost` (MDX Frontmatter)
 
-Represents a condensed view of a blog post in the Writing section.
+Represents a blog post defined via Astro Content Collections (MDX).
+Each post MUST contain the following properties in its frontmatter:
 
-- **title** (string): Title of the article.
-- **date** (string): Publication date.
-- **readTime** (string): Estimated reading time (e.g., "5 MIN READ").
-- **slug** (string): Link/path to the article in `/blog/[slug]`.
+- **title** (string): Title of the blog post.
+- **description** (string): Short description or excerpt.
+- **pubDate** (string/date): Publication date.
+- **heroImage** (string): Path to the image file.
+- **tags** (string[]): Collection of tags.
+- **language** ('pl' | 'en'): Language identifier.
 
 ## UI State
 

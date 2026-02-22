@@ -4,8 +4,8 @@
 
 <!--
 SYNC IMPACT REPORT:
-- Version change: 1.2.0 → 1.3.0
-- Modified principles: Focused Content Areas (replaced Sanity CMS with Local MDX Content Collections)
+- Version change: 1.3.0 → 1.4.0
+- Modified principles: Added explicit rules for Astro Content Collections and MDX Typography.
 - Required updates:
   - checklist-template.md ✅ verified
   - plan-template.md ✅ verified
@@ -39,11 +39,19 @@ The website is strictly divided into two primary sections:
 2. **Blog**: Educational or professional articles accessible primarily via the `/blog` route. Blog content MUST be managed via **Local MDX files and Astro Content Collections**. No external headless CMS (like Sanity) should be used. Additionally, blog posts MUST adhere to strict SEO principles—all metadata tags, sitemaps, and structured data must be flawlessly implemented via MDX frontmatter to ensure maximum discoverability.
    These sections should be distinct but share the unified design system.
 
-### VI. Zero-Test Policy
+### VI. Content Management & Data Models
+
+Używamy wyłącznie Astro Content Collections do zarządzania treścią. Nie tworzymy ręcznych interfejsów TypeScript dla modeli danych, które są już definiowane w `src/content/config.ts`.
+
+### VII. MDX Typography
+
+Wszystkie nagłówki wewnątrz artykułów (prose) muszą mieć spójne odstępy: h2 (`mt-12`, `mb-4`), h3 (`mt-8`, `mb-2`). Używamy wtyczki `@tailwindcss/typography` (prose) do bazowego stylowania.
+
+### VIII. Zero-Test Policy
 
 Automated tests are EXPLICITLY OUT OF SCOPE. No testing libraries (e.g., Jest, Cypress, Playwright) should be configured, and no test files should be written. Validation will be performed manually and via performance profiling tools (e.g., Lighthouse).
 
-### VII. Mobile-First RWD
+### IX. Mobile-First RWD
 
 The project MUST be developed using a Responsive Web Design (RWD) and mobile-first approach. All layouts and components must be primarily designed and optimized for mobile devices, progressively enhancing the experience for larger screens.
 
@@ -64,4 +72,4 @@ The project MUST be developed using a Responsive Web Design (RWD) and mobile-fir
 All architectural decisions, component designs, and feature implementations MUST comply with the principles outlined in this constitution.
 Amendments to this document require a version bump and documented rationale.
 
-**Version**: 1.3.0 | **Ratified**: 2026-02-20 | **Last Amended**: 2026-02-21
+**Version**: 1.4.0 | **Ratified**: 2026-02-20 | **Last Amended**: 2026-02-22
