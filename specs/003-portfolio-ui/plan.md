@@ -71,16 +71,19 @@ src/
 ├── layouts/
 │   └── Layout.astro # Main page wrapper
 ├── pages/
-│   ├── index.astro  # Main portfolio page entry point
-│   └── api/         # API routes (e.g., contact form handler)
-└── middleware.ts    # Astro Middleware for language detection/redirection
+│   ├── [lang]/
+│   │   ├── index.astro       # Main portfolio page entry point (exports getStaticPaths for 'pl' and 'en')
+│   │   └── blog/
+│   │       └── [slug].astro  # Dynamic blog posts
+│   └── api/                  # API routes (e.g., contact form handler)
+└── middleware.ts             # Astro Middleware to redirect from / to /[lang]/
 ```
 
 **Structure Decision**: A single web application focusing on modular components grouped by domain (ui, sections, layout) inside the src directory.
 
 ### Key Implementation Details
 
-1. **Language Detection & Redirection**: To comply with the "Bilingual by Default" principle and prevent Layout Shifts, we will implement an `Astro Middleware` (`src/middleware.ts`) or an inline script in `<head>` that reads `navigator.language`. On the first visit, it will redirect the user to the correct localized route (e.g., `/pl` or `/en`) before the page content visually renders.
+1. **Language Detection & Redirection**: To comply with the "Bilingual by Default" principle and prevent Layout Shifts, we will implement an `Astro Middleware` (`src/middleware.ts`) or an inline script in `<head>`. If a user visits the root `/`, the middleware reads `navigator.language` and redirects to the correct localized route (`/pl` or `/en`). The core pages will be structured as `src/pages/[lang]/index.astro` utilizing `getStaticPaths()` to generate static variants for `'pl'` and `'en'`.
 2. **Contact Form Email Service**: The contact form will submit data to a native Astro API route (e.g., `src/pages/api/contact.ts`), which will use the `resend` SDK and environment variables to securely dispatch the email.
 3. **Blog Content Collections**: The blog will be driven entirely by local MDX files. We will define a strict Zod schema in `src/content/config.ts` to enforce frontmatter structure:
 
