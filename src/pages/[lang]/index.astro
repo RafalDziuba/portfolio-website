@@ -1,0 +1,27 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Hero from '../../components/sections/Hero.astro';
+import Expertise from '../../components/sections/Expertise.astro';
+import Career from '../../components/sections/Career.astro';
+import Projects from '../../components/sections/Projects.astro';
+import Writing from '../../components/sections/Writing.astro';
+
+export function getStaticPaths() {
+  return [
+    { params: { lang: 'en' } },
+    { params: { lang: 'pl' } }
+  ];
+}
+
+const { lang } = Astro.params;
+---
+
+<Layout lang={lang as 'en' | 'pl'} title={lang === 'pl' ? 'Rafał Dziuba - Portfolio' : 'Rafał Dziuba - Portfolio'}>
+  <main>
+    <Hero currentLang={lang as 'en' | 'pl'} />
+    <Expertise currentLang={lang as 'en' | 'pl'} />
+    <Career currentLang={lang as 'en' | 'pl'} />
+    <Projects currentLang={lang as 'en' | 'pl'} />
+    <Writing currentLang={lang as 'en' | 'pl'} />
+  </main>
+</Layout>

@@ -1,0 +1,28 @@
+@import 'tailwindcss';
+@plugin "@tailwindcss/typography";
+
+@layer base {
+  :root {
+    --bg-color: #ffffff;
+    --text-color: #0a0a0a;
+  }
+  .dark {
+    --bg-color: #0a0a0a;
+    --text-color: #ffffff;
+  }
+}
+
+@layer components {
+  .prose h2 {
+    @apply mt-12 mb-4;
+  }
+  .prose h3 {
+    @apply mt-8 mb-2;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}

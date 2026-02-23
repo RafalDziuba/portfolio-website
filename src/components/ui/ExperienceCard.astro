@@ -1,0 +1,62 @@
+---
+import type { Experience } from '../../types/models';
+import Badge from './Badge.astro';
+
+interface Props {
+  experience: Experience;
+  index: number;
+}
+
+const { experience, index } = Astro.props;
+---
+
+<div class="relative pl-8 sm:pl-32 py-6 group">
+  
+  {/* Timeline Desktop Date (Left side) */}
+  <div class="hidden sm:flex flex-col items-end absolute left-0 w-24 top-7">
+    <span class="text-sm font-medium text-gray-500 ">
+      {experience.startDate}
+    </span>
+    <span class="text-sm font-medium text-gray-400 ">
+      {experience.endDate}
+    </span>
+  </div>
+
+  {/* Timeline Line & Node */}
+  <div class="absolute left-[3px] sm:left-[110px] top-8 bottom-0 w-px bg-gray-200 group-last:bg-transparent"></div>
+  <div class="absolute left-[-5px] sm:left-[102px] top-8 h-4 w-4 rounded-full border-2 border-white bg-gray-300 "></div>
+
+  {/* Content */}
+  <div class="flex flex-col gap-2">
+    <div class="flex flex-col sm:hidden mb-2 text-sm text-gray-500 font-medium">
+      {experience.startDate} — {experience.endDate}
+    </div>
+    
+    <div class="flex items-center gap-3 mb-1">
+      <div class="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-500 ">
+        0{index}
+      </div>
+      <div>
+        <h3 class="text-xl font-bold text-gray-900 leading-tight">{experience.companyName}</h3>
+        <h4 class="text-base text-gray-600 ">{experience.position}</h4>
+      </div>
+    </div>
+
+    <div class="mt-4">
+      <ul class="space-y-3 text-gray-600 ">
+        {experience.description.map((item) => (
+          <li class="flex items-start">
+            <span class="mr-2 mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-500"></span>
+            <span class="text-[15px] leading-relaxed">{item}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="flex flex-wrap gap-2 mt-6">
+      {experience.technologies.map((tech) => (
+        <Badge text={tech} />
+      ))}
+    </div>
+  </div>
+</div>

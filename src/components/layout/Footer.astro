@@ -1,0 +1,127 @@
+---
+interface Props {
+  currentLang?: 'en' | 'pl';
+}
+const { currentLang = 'en' } = Astro.props;
+
+const content = currentLang === 'pl' ? {
+  title: "Bądźmy w kontakcie",
+  subtitle: "Szukasz programisty do swojego projektu? Napisz do mnie.",
+  name: "Imię",
+  email: "Adres e-mail",
+  message: "Wiadomość",
+  send: "Wyślij wiadomość",
+  sending: "Wysyłanie...",
+  success: "Wiadomość wysłana pomyślnie!",
+  error: "Wystąpił błąd. Spróbuj ponownie.",
+  security: "Wiadomość zabezpieczona certyfikatem SSL. Dane trafiają bezpośrednio na moją skrzynkę."
+} : {
+  title: "Get in touch",
+  subtitle: "Looking for a developer for your next project? Drop me a line.",
+  name: "Name",
+  email: "Email address",
+  message: "Message",
+  send: "Send message",
+  sending: "Sending...",
+  success: "Message sent successfully!",
+  error: "An error occurred. Please try again.",
+  security: "Message secured by SSL. Data goes directly to my inbox."
+};
+---
+<footer id="footer" class="bg-gray-50 border-t border-gray-200 py-16 sm:py-24 transition-colors duration-300">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-extrabold text-gray-900 tracking-tight sm:text-4xl mb-4">{content.title}</h2>
+      <p class="text-lg text-gray-600 ">{content.subtitle}</p>
+    </div>
+    
+    <div class="bg-white rounded-2xl p-6 sm:p-10 border border-gray-100 shadow-sm">
+      <form id="contact-form" class="space-y-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div>
+            <label for="name" class="block text-sm font-medium text-gray-700 mb-2">{content.name}</label>
+            <input type="text" name="name" id="name" required class="block w-full rounded-lg border-gray-300 bg-white text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 py-3 px-4 transition-colors" />
+          </div>
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">{content.email}</label>
+            <input type="email" name="email" id="email" required class="block w-full rounded-lg border-gray-300 bg-white text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 py-3 px-4 transition-colors" />
+          </div>
+        </div>
+        
+        <div>
+          <label for="message" class="block text-sm font-medium text-gray-700 mb-2">{content.message}</label>
+          <textarea id="message" name="message" rows="4" required class="block w-full rounded-lg border-gray-300 bg-white text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 py-3 px-4 transition-colors"></textarea>
+        </div>
+        
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4">
+          <div class="flex items-center text-sm text-gray-500 max-w-xs sm:max-w-sm">
+            <svg class="h-5 w-5 mr-3 text-green-500 shrink-0" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
+            </svg>
+            <span class="leading-snug">{content.security}</span>
+          </div>
+          
+          <button type="submit" id="submit-button" class="inline-flex justify-center w-full sm:w-auto items-center rounded-lg bg-blue-600 px-8 py-3 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 :ring-blue-800 transition-colors disabled:opacity-70 disabled:cursor-not-allowed">
+            <span id="submit-text">{content.send}</span>
+            <span id="loading-text" class="hidden">{content.sending}</span>
+          </button>
+        </div>
+        
+        <div id="form-status" class="hidden p-4 rounded-lg mt-4 text-center text-sm font-medium"></div>
+      </form>
+    </div>
+    
+    <div class="mt-12 text-center text-sm text-gray-500 ">
+      &copy; {new Date().getFullYear()} Rafał Dziuba. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<script define:vars={{ successMsg: content.success, errorMsg: content.error }}>
+  const form = document.getElementById('contact-form');
+  const submitBtn = document.getElementById('submit-button');
+  const submitText = document.getElementById('submit-text');
+  const loadingText = document.getElementById('loading-text');
+  const statusDiv = document.getElementById('form-status');
+
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const formData = new FormData(form);
+      
+      // Update UI to loading state
+      submitBtn.disabled = true;
+      submitText.classList.add('hidden');
+      loadingText.classList.remove('hidden');
+      statusDiv.classList.add('hidden');
+      
+      try {
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          body: formData,
+        });
+        
+        const result = await response.json();
+        
+        statusDiv.classList.remove('hidden', 'bg-red-50', 'text-red-800', '', '');
+        
+        if (response.ok) {
+          statusDiv.classList.add('bg-green-50', 'text-green-800', '', '');
+          statusDiv.textContent = successMsg;
+          form.reset();
+        } else {
+          throw new Error(result.error || 'Failed to send');
+        }
+      } catch (err) {
+        statusDiv.classList.remove('hidden', 'bg-green-50', 'text-green-800', '', '');
+        statusDiv.classList.add('bg-red-50', 'text-red-800', '', '');
+        statusDiv.textContent = errorMsg;
+      } finally {
+        submitBtn.disabled = false;
+        submitText.classList.remove('hidden');
+        loadingText.classList.add('hidden');
+      }
+    });
+  }
+</script>

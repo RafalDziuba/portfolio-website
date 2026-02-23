@@ -1,0 +1,52 @@
+---
+import type { Experience } from '../../types/models';
+import ExperienceCard from '../ui/ExperienceCard.astro';
+
+interface Props {
+  currentLang?: 'en' | 'pl';
+}
+
+const { currentLang = 'en' } = Astro.props;
+
+const labels = currentLang === 'pl' ? {
+  title: "Doświadczenie",
+  subtitle: "Oto wybrane firmy, z którymi współpracowałem."
+} : {
+  title: "Career",
+  subtitle: "Here is a selection of companies I've worked with."
+};
+
+const mockExperiences: Experience[] = [
+  {
+    companyName: "Acme Corp",
+    companyLogo: "",
+    isCurrent: true,
+    position: currentLang === 'pl' ? "Senior Fullstack Developer" : "Senior Fullstack Developer",
+    startDate: currentLang === 'pl' ? "Sty 2022" : "Jan 2022",
+    endDate: currentLang === 'pl' ? "Obecnie" : "Present",
+    description: currentLang === 'pl' ? [
+      "Projektowanie i wdrażanie skalowalnych aplikacji.",
+      "Optymalizacja wydajności baz danych."
+    ] : [
+      "Designing and implementing scalable applications.",
+      "Optimizing database performance."
+    ],
+    technologies: ["React", "Node.js", "PostgreSQL", "AWS"]
+  }
+];
+---
+
+<section id="career" class="py-20 sm:py-24 bg-gray-50/50 ">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="mb-16">
+      <h2 class="text-sm font-medium text-gray-500 tracking-wide uppercase mb-2">Career</h2>
+      <h3 class="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900 ">{labels.title}</h3>
+    </div>
+
+    <div class="max-w-3xl space-y-12 pb-12">
+      {mockExperiences.map((exp, index) => (
+        <ExperienceCard experience={exp} index={index + 1} />
+      ))}
+    </div>
+  </div>
+</section>

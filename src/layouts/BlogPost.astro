@@ -1,0 +1,63 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Layout from './Layout.astro';
+import Badge from '../components/ui/Badge.astro';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  lang?: 'en' | 'pl';
+}
+
+const { post, lang = 'en' } = Astro.props;
+const { title, description, pubDate, heroImage, tags = [] } = post.data;
+
+const formattedDate = pubDate.toLocaleDateString(lang === 'pl' ? 'pl-PL' : 'en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+const backText = lang === 'pl' ? '← Powrót do artykułów' : '← Back to articles';
+const targetUrl = `/${lang}/#writing`;
+---
+
+<Layout title={`${title} | Rafał Dziuba`} description={description} lang={lang}>
+  <article class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32">
+    <div class="mb-8">
+      <a href={targetUrl} class="inline-flex items-center text-sm font-medium text-gray-500 hover:text-blue-600 :text-blue-400 transition-colors">
+        {backText}
+      </a>
+    </div>
+
+    <header class="mb-12">
+      <time datetime={pubDate.toISOString()} class="text-sm font-medium text-gray-500 mb-4 block">
+        {formattedDate}
+      </time>
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight mb-6">
+        {title}
+      </h1>
+      
+      {tags.length > 0 && (
+        <div class="flex flex-wrap gap-2 mb-6">
+          {tags.map((tag) => <Badge text={tag} />)}
+        </div>
+      )}
+      
+      <p class="text-xl text-gray-600 max-w-2xl">
+        {description}
+      </p>
+    </header>
+
+    {heroImage && (
+      <div class="mb-16 rounded-2xl overflow-hidden bg-gray-100 border border-gray-200 shadow-sm aspect-video">
+        <img src={heroImage} alt={title} class="w-full h-full object-cover" />
+      </div>
+    )}
+
+    {/* The prose prose-blue classes apply Tailwind Typography.
+        h2 and h3 margins are customized in global.css (T009) */}
+    <div class="prose prose-lg prose-blue mx-auto wrap-break-word max-w-none">
+      <slot />
+    </div>
+  </article>
+</Layout>

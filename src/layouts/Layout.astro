@@ -1,23 +1,37 @@
+---
+import '../styles/global.css';
+import Navigation from '../components/layout/Navigation.astro';
+import Footer from '../components/layout/Footer.astro';
+
+interface Props {
+	title?: string;
+	description?: string;
+	lang?: string;
+}
+
+const { 
+	title = 'Portfolio', 
+	description = 'Developer Portfolio', 
+	lang = 'en' 
+} = Astro.props;
+---
+
 <!doctype html>
-<html lang="en">
+<html lang={lang}>
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
+		<meta name="description" content={description} />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		<title>{title}</title>
+		
 	</head>
-	<body>
+	<body class="antialiased min-h-screen transition-colors duration-300 relative">
+		<Navigation currentLang={lang as 'en'|'pl'} />
+		
 		<slot />
+		
+		<Footer currentLang={lang as 'en'|'pl'} />
 	</body>
 </html>
-
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>

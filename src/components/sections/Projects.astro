@@ -1,0 +1,55 @@
+---
+import type { Project } from '../../types/models';
+import ProjectCard from '../ui/ProjectCard.astro';
+
+interface Props {
+  currentLang?: 'en' | 'pl';
+}
+
+const { currentLang = 'en' } = Astro.props;
+
+const labels = currentLang === 'pl' ? {
+  title: "Projekty Osobiste",
+  subtitle: "Rozwiązania, które zbudowałem w wolnym czasie, aby eksplorować nowe technologie."
+} : {
+  title: "Personal Projects",
+  subtitle: "Solutions I built in my free time to explore new technologies."
+};
+
+const mockProjects: Project[] = [
+  {
+    title: "EcoMonitor UI",
+    description: currentLang === 'pl' 
+      ? "Dashboard do monitorowania zużycia energii elektrycznej w czasie rzeczywistym z integracją urządzeń IoT."
+      : "Real-time energy consumption dashboard with IoT device integration.",
+    image: "",
+    githubUrl: "https://github.com",
+    technologies: ["React", "Tailwind", "Vite"]
+  },
+  {
+    title: "AI Code Reviewer",
+    description: currentLang === 'pl'
+      ? "Narzędzie CLI oparte na sztucznej inteligencji, analizujące kod pod kątem bezpieczeństwa i dobrych praktyk."
+      : "AI-based CLI tool analyzing code for security and best practices.",
+    image: "",
+    githubUrl: "https://github.com",
+    technologies: ["Node.js", "OpenAI API", "TypeScript"]
+  }
+];
+---
+
+<section id="projects" class="py-24 sm:py-32 bg-gray-50/50 ]">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="mb-16">
+      <h2 class="text-sm font-medium text-gray-500 tracking-wide uppercase mb-2">Selected Work</h2>
+      <h3 class="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900 ">{labels.title}</h3>
+    </div>
+
+    {/* 2-column grid layout per FR-009 */}
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+      {mockProjects.map((project) => (
+        <ProjectCard project={project} />
+      ))}
+    </div>
+  </div>
+</section>
