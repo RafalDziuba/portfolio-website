@@ -1,41 +1,23 @@
 ---
-interface Props {
-  currentLang?: 'en' | 'pl';
-}
+import { getRelativeLocaleUrl } from 'astro:i18n';
+import { getLangFromUrl, useTranslations } from '../../i18n/utils';
+import LanguagePicker from '../ui/LanguagePicker.astro';
 
-const { currentLang = 'en' } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
 
-// Mock navigation links based on language
-const navLinks = currentLang === 'pl' ? [
-  { text: 'O mnie', href: `/${currentLang}/#hero` },
-  { text: 'Doświadczenie', href: `/${currentLang}/#expertise` },
-  { text: 'Kariera', href: `/${currentLang}/#career` },
-  { text: 'Projekty', href: `/${currentLang}/#projects` },
-  { text: 'Blog', href: `/${currentLang}/#writing` },
-] : [
-  { text: 'About', href: `/${currentLang}/#hero` },
-  { text: 'Expertise', href: `/${currentLang}/#expertise` },
-  { text: 'Career', href: `/${currentLang}/#career` },
-  { text: 'Projects', href: `/${currentLang}/#projects` },
-  { text: 'Writing', href: `/${currentLang}/#writing` },
+const navLinks = [
+  { text: t('nav.home'), href: `/${lang === 'en' ? 'en/' : ''}#hero` },
+  { text: t('nav.about'), href: `/${lang === 'en' ? 'en/' : ''}#about` },
+  { text: t('nav.projects'), href: `/${lang === 'en' ? 'en/' : ''}#projects` },
 ];
-
-const targetLang = currentLang === 'pl' ? 'en' : 'pl';
-const toggleLangText = currentLang === 'pl' ? 'EN' : 'PL';
-
-// Read current path from Astro.url to replace the current language param gracefully
-let targetUrl = Astro.url.pathname.replace(`/${currentLang}`, `/${targetLang}`);
-// If for some reason we're not inside a /[lang] route, fallback to root target lang
-if (targetUrl === Astro.url.pathname) {
-  targetUrl = `/${targetLang}`;
-}
 ---
 
 <nav class="fixed top-0 left-0 right-0 z-50 py-4 bg-white ] border-b border-gray-100 transition-colors duration-300">
   <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between">
       <div class="shrink-0">
-        <a href={`/${currentLang}`} class="text-xl font-bold tracking-tight text-gray-900 flex items-center gap-2">
+        <a href={`/${lang === 'en' ? 'en/' : ''}`} class="text-xl font-bold tracking-tight text-gray-900 flex items-center gap-2">
           {/* Circular image avatar */}
           <img src="/avatar-placeholder.png" alt="Rafal Dziuba" class="w-8 h-8 rounded-full bg-gray-200 object-cover" />
           <span class="hidden sm:inline">RafalDziuba</span>
@@ -60,16 +42,12 @@ if (targetUrl === Astro.url.pathname) {
           <svg class="w-5 h-5 hidden " fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
         </button>
         
-        <a href={targetUrl} class="text-sm font-medium text-gray-400 hover:text-gray-900 :text-white transition-colors">
-          {toggleLangText}
-        </a>
+        <LanguagePicker />
       </div>
       
       {/* Mobile menu button */}
       <div class="flex md:hidden items-center space-x-4">
-        <a href={targetUrl} class="text-sm font-medium text-gray-400 hover:text-gray-900 :text-white transition-colors">
-          {toggleLangText}
-        </a>
+        <LanguagePicker />
         
         <button id="theme-toggle-mobile" class="text-gray-400 hover:text-gray-900 :text-white transition-colors">
            <svg class="w-5 h-5 " fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>

@@ -26,6 +26,32 @@ const {
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 		
+		<!-- Auto-detect language on first load -->
+		<script is:inline>
+			(function() {
+				// Only run on root exactly, not on subpages
+				// We don't want to redirect from /en/blog to /blog just because browser is Polish
+				if (window.location.pathname !== '/') return;
+				
+				// Check if user has already visited and chosen a language
+				const storedLang = localStorage.getItem('preferred-lang');
+				
+				if (storedLang === 'pl') {
+					return; // Stay on /
+				}
+				
+				if (storedLang === 'en') {
+					window.location.replace('/en/');
+					return;
+				}
+
+				// If no preference, check browser language
+				const browserLang = navigator.language || navigator.userLanguage;
+				if (browserLang && browserLang.toLowerCase().startsWith('en')) {
+					window.location.replace('/en/');
+				}
+			})();
+		</script>
 	</head>
 	<body class="antialiased min-h-screen transition-colors duration-300 relative">
 		<Navigation currentLang={lang as 'en'|'pl'} />

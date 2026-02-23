@@ -1,0 +1,19 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Hero from '../../components/sections/Hero.astro';
+import Expertise from '../../components/sections/Expertise.astro';
+import Career from '../../components/sections/Career.astro';
+import Projects from '../../components/sections/Projects.astro';
+import Writing from '../../components/sections/Writing.astro';
+---
+
+<Layout lang="en" title="Rafał Dziuba - Portfolio">
+  <!-- No auto-detect redirect needed here, this is the explicit english route -->
+  <main>
+    <Hero currentLang="en" />
+    <Expertise currentLang="en" />
+    <Career currentLang="en" />
+    <Projects currentLang="en" />
+    <Writing currentLang="en" />
+  </main>
+</Layout>

@@ -1,0 +1,42 @@
+---
+import { languages } from '../../i18n/ui';
+import { getRelativeLocaleUrl } from 'astro:i18n';
+
+// Pobieramy aktualną ścieżkę, aby wiedzieć, gdzie przekierować po zmianie języka
+const { pathname } = Astro.url;
+const currentLang = pathname.startsWith('/en') ? 'en' : 'pl';
+
+// Logika wycinania obecnego prefixu języka, aby podmienić go na nowy
+const getLocalizedPath = (targetLang: string) => {
+  const pathWithoutLang = pathname.replace(/^\/(en|pl)/, '') || '/';
+  
+  if (targetLang === 'pl') {
+    return pathWithoutLang;
+  }
+  return getRelativeLocaleUrl(targetLang, pathWithoutLang);
+}
+---
+
+<div class="flex items-center gap-3">
+  {Object.entries(languages).map(([lang, label]) => (
+    <a 
+      href={getLocalizedPath(lang)}
+      data-lang={lang}
+      class={`lang-picker-link text-sm font-medium transition-colors ${currentLang === lang ? "text-gray-900 font-bold" : "text-gray-400 hover:text-gray-900"}`}
+    >
+      {lang.toUpperCase()}
+    </a>
+  ))}
+</div>
+
+<script>
+  const langLinks = document.querySelectorAll('.lang-picker-link');
+  langLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      const lang = link.getAttribute('data-lang');
+      if (lang) {
+        localStorage.setItem('preferred-lang', lang);
+      }
+    });
+  });
+</script>
