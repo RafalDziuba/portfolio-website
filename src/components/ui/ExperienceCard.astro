@@ -7,53 +7,65 @@ interface Props {
   index: number;
 }
 
-const { experience, index } = Astro.props;
+const { experience } = Astro.props;
 ---
 
-<div class="relative pl-8 sm:pl-32 py-6 group">
+<div class="relative py-6 group">
   
   {/* Timeline Desktop Date (Left side) */}
-  <div class="hidden sm:flex flex-col items-end absolute left-0 w-24 top-7">
-    <span class="text-sm font-medium text-gray-500 ">
+  <div class="hidden sm:flex flex-col items-end absolute left-0 w-32 top-7 text-right pr-8">
+    <span class="text-sm font-medium text-gray-500 transition-colors duration-300 group-hover:text-blue-600">
       {experience.startDate}
     </span>
-    <span class="text-sm font-medium text-gray-400 ">
+    <span class="text-sm font-medium text-gray-400">
       {experience.endDate}
     </span>
   </div>
 
   {/* Timeline Line & Node */}
-  <div class="absolute left-[3px] sm:left-[110px] top-8 bottom-0 w-px bg-gray-200 group-last:bg-transparent"></div>
-  <div class="absolute left-[-5px] sm:left-[102px] top-8 h-4 w-4 rounded-full border-2 border-white bg-gray-300 "></div>
+  <div class="absolute left-[15px] sm:left-[128px] top-8 bottom-0 w-px bg-gray-200 group-last:bg-transparent"></div>
+  <div class="absolute left-[7px] sm:left-[120px] top-8 h-4 w-4 rounded-full border-2 border-white bg-gray-300 transition-colors duration-300 group-hover:bg-blue-500 group-hover:border-blue-100 shadow-sm"></div>
 
   {/* Content */}
-  <div class="flex flex-col gap-2">
-    <div class="flex flex-col sm:hidden mb-2 text-sm text-gray-500 font-medium">
+  <div class="flex flex-col gap-2 pl-10 sm:pl-[170px]">
+    {/* Mobile Date */}
+    <div class="flex flex-col sm:hidden mb-1 text-sm text-blue-600 font-semibold tracking-wide uppercase">
       {experience.startDate} — {experience.endDate}
     </div>
     
-    <div class="flex items-center gap-3 mb-1">
-      <div class="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-500 ">
-        0{index}
-      </div>
-      <div>
-        <h3 class="text-xl font-bold text-gray-900 leading-tight">{experience.companyName}</h3>
-        <h4 class="text-base text-gray-600 ">{experience.position}</h4>
+    {/* Header Info */}
+    <div class="mb-3 mt-[-4px]">
+      <h3 class="text-xl sm:text-2xl font-bold text-gray-900 leading-tight mb-2 group-hover:text-blue-600 transition-colors duration-200">
+        {experience.position}
+      </h3>
+      <div class="flex items-center gap-2">
+        {experience.companyLogo ? (
+          <img src={experience.companyLogo} alt={experience.companyName} class="w-6 h-6 rounded-md object-cover border border-gray-100 shadow-sm" />
+        ) : (
+          <div class="flex items-center justify-center w-6 h-6 rounded-md bg-blue-50 text-blue-600 border border-blue-100">
+            <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+            </svg>
+          </div>
+        )}
+        <span class="text-base font-semibold text-gray-800">{experience.companyName}</span>
       </div>
     </div>
 
-    <div class="mt-4">
-      <ul class="space-y-3 text-gray-600 ">
+    {/* Description List */}
+    <div class="mt-2 transition-colors duration-300">
+      <ul class="space-y-3 text-gray-600 group-hover:text-gray-800">
         {experience.description.map((item) => (
           <li class="flex items-start">
-            <span class="mr-2 mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-blue-500"></span>
+            <span class="mr-2 mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-gray-400 group-hover:bg-blue-500 transition-colors duration-300"></span>
             <span class="text-[15px] leading-relaxed">{item}</span>
           </li>
         ))}
       </ul>
     </div>
 
-    <div class="flex flex-wrap gap-2 mt-6">
+    {/* Tags */}
+    <div class="flex flex-wrap gap-2 mt-5">
       {experience.technologies.map((tech) => (
         <Badge text={tech} />
       ))}

@@ -21,17 +21,49 @@ const mockExperiences: Experience[] = [
     companyName: "Acme Corp",
     companyLogo: "",
     isCurrent: true,
-    position: currentLang === 'pl' ? "Senior Fullstack Developer" : "Senior Fullstack Developer",
-    startDate: currentLang === 'pl' ? "Sty 2022" : "Jan 2022",
+    position: currentLang === 'pl' ? "Szef Programistów" : "Lead Developer",
+    startDate: currentLang === 'pl' ? "Sty 2024" : "Jan 2024",
     endDate: currentLang === 'pl' ? "Obecnie" : "Present",
     description: currentLang === 'pl' ? [
-      "Projektowanie i wdrażanie skalowalnych aplikacji.",
-      "Optymalizacja wydajności baz danych."
+      "Zarządzanie zespołem 5 programistów i ustalanie kierunku architektonicznego.",
+      "Redukcja długu technologicznego o 40% w kluczowych systemach."
     ] : [
-      "Designing and implementing scalable applications.",
-      "Optimizing database performance."
+      "Leading a team of 5 developers and setting architectural direction.",
+      "Reduced technical debt by 40% across core systems."
+    ],
+    technologies: ["Next.js", "TypeScript", "Tailwind CSS", "GraphQL"]
+  },
+  {
+    companyName: "TechFlow Solutions",
+    companyLogo: "",
+    isCurrent: false,
+    position: currentLang === 'pl' ? "Senior Fullstack Developer" : "Senior Fullstack Developer",
+    startDate: currentLang === 'pl' ? "Mar 2022" : "Mar 2022",
+    endDate: currentLang === 'pl' ? "Gru 2023" : "Dec 2023",
+    description: currentLang === 'pl' ? [
+      "Projektowanie i wdrażanie skalowalnych aplikacji chmurowych.",
+      "Optymalizacja wydajności baz danych, co skróciło czas odpowiedzi o 300ms."
+    ] : [
+      "Designing and implementing scalable cloud applications.",
+      "Optimizing database performance, reducing average query time by 300ms."
     ],
     technologies: ["React", "Node.js", "PostgreSQL", "AWS"]
+  },
+  {
+    companyName: "Digital Studio",
+    companyLogo: "",
+    isCurrent: false,
+    position: currentLang === 'pl' ? "Frontend Developer" : "Frontend Developer",
+    startDate: currentLang === 'pl' ? "Wrz 2020" : "Sep 2020",
+    endDate: currentLang === 'pl' ? "Lut 2022" : "Feb 2022",
+    description: currentLang === 'pl' ? [
+      "Tworzenie interaktywnych interfejsów użytkownika dla klientów e-commerce.",
+      "Wdrażanie dostępności (a11y) i dbanie o wysokie wyniki w Lighthouse."
+    ] : [
+      "Building interactive UIs for e-commerce clients.",
+      "Implementing accessibility features (a11y) and maintaining high Lighthouse scores."
+    ],
+    technologies: ["Vue.js", "Sass", "Cypress", "Figma"]
   }
 ];
 ---
@@ -43,7 +75,7 @@ const mockExperiences: Experience[] = [
       <h3 class="text-3xl sm:text-4xl font-bold tracking-tight text-gray-900 ">{labels.title}</h3>
     </div>
 
-    <div class="max-w-3xl space-y-12 pb-12">
+    <div class="max-w-3xl mx-auto space-y-12 pb-12">
       {mockExperiences.map((exp, index) => (
         <ExperienceCard experience={exp} index={index + 1} />
       ))}
